@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Order {
+  id          String   @id @default(cuid())
+  publicToken String   @unique
+  status      String   @default("new")
+  
+  name        String
+  phone       String
+  address     String
+  isOutsideCity Boolean @default(false)
+  desiredDate DateTime?
+  desiredTime String?
+  comment     String?
+  
+  estimatedTotal Int
+  finalPrice     Int?
+  agreedTime     String?
+  
+  itemsJson   String
+  ownerNote   String?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CompanySettings {
+  id          String @id @default("singleton")
+  name        String @default("Химчистка")
+  phone       String?
+  city        String?
+  accentColor String @default("#2B6CEB")
+  tariffsJson String @default("{}")
+  gameMode    String @default("off")
+  gameBonus   Int @default(0)
+}
